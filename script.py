@@ -70,12 +70,14 @@ def main():
     excel_files = find_excel_files(input_folder)
 
     for file_path in excel_files:
+        print(f"Opening {file_path}...")
         target_row = extract_target_row(file_path)
         if target_row:
             target_rows.append(target_row)
             total_files_processed += 1
+            print(f"OK")
         else:
-            print(f"Skipping {file_path} - Target row not found")
+            print(f"Target row not found")
 
     if target_rows:
         workbook = Workbook()
