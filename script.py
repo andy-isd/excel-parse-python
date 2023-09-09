@@ -12,12 +12,14 @@ def extract_target_row_xlsx(file_path):
     index_rajion = None
 
     for index, row in enumerate(sheet.iter_rows(values_only=True), start=1):
-        if row[1] == 'Район':
+        if row[1] == 'Район' or row[1] == 'Територіальний підрозділ':
             found_rajion = True
             index_rajion = index
         elif found_rajion and index == index_rajion + 4:
-            target_row = list(row)
-            break
+            if row[1] == 2:
+                index_rajion = index_rajion + 1
+            else:
+                target_row = list(row)
 
     workbook.close()
 
@@ -33,11 +35,14 @@ def extract_target_row_xls(file_path):
 
     for row_index in range(sheet.nrows):
         row = sheet.row_values(row_index)
-        if row[1] == 'Район':
+        if row[1] == 'Район' or row[1] == 'Територіальний підрозділ':
             found_rajion = True
             index_rajion = row_index
         elif found_rajion and row_index == index_rajion + 4:
-            target_row = row
+            if row[1] == 2:
+                index_rajion = index_rajion + 1
+            else:
+                target_row = row
             break
 
     return target_row
